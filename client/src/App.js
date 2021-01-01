@@ -38,11 +38,11 @@ function getForecastsInCurrentUnits(forecasts, tempUnit) {
 	let convertedForecasts = [];	
 	if (tempUnit === "C") {	
 		for (let forecast of forecasts) {
-				const tempHigh = (forecast.day.temp_high - 32) / 9 * 5;		
-				const tempLow = (forecast.night.temp_low - 32) / 9 * 5;		
+				const tempHigh = (forecast.day.temp_extreme - 32) / 9 * 5;		
+				const tempLow = (forecast.night.temp_extreme - 32) / 9 * 5;		
 				const convertedForecast = 
-				{...forecast, day: {...forecast.day, temp_high:tempHigh.toFixed()}, 
-								night: {...forecast.night, temp_low: tempLow.toFixed()}
+				{...forecast, day: {...forecast.day, temp_extreme:tempHigh.toFixed()}, 
+								night: {...forecast.night, temp_extreme: tempLow.toFixed()}
 				};
 				convertedForecasts.push(convertedForecast);
 		}
@@ -50,11 +50,11 @@ function getForecastsInCurrentUnits(forecasts, tempUnit) {
 	}
 	// Otherwise the temperatures are in Fahrenheit
 	for (let forecast of forecasts) {
-		const tempHigh = forecast.day.temp_high / 5 * 9 + 32;		
-		const tempLow = forecast.night.temp_low / 5 * 9 + 32;	
+		const tempHigh = forecast.day.temp_extreme / 5 * 9 + 32;		
+		const tempLow = forecast.night.temp_extreme / 5 * 9 + 32;	
 		const convertedForecast = 
-			{...forecast, day: {...forecast.day, temp_high:tempHigh.toFixed()}, 
-						night: {...forecast.night, temp_low: tempLow.toFixed()}
+			{...forecast, day: {...forecast.day, temp_extreme: tempHigh.toFixed()}, 
+						night: {...forecast.night, temp_extreme: tempLow.toFixed()}
 			};
 			convertedForecasts.push(convertedForecast);
 	}
@@ -98,7 +98,7 @@ function App() {
           state.forecasts.map((forecast, ind) => { 
             return (		
 		<CardGroup className="weather-alert">
-		<TwentyFourHourWeather forecast={forecast} state={state} />
+		<TwentyFourHourWeather forecast={forecast} currTemperatureUnit={state.temperatureUnit} />
 		</CardGroup>		 
 		 )
 		 })
