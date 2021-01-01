@@ -26,5 +26,5 @@ app.get('/', function (req, res) {
 
 
 app.listen(app.get('port'), function() {
-  console.log('Express app weather-usereducer React is running on port', app.get('port'));
+  console.log('Express app context-api-weather is running on port', app.get('port'));
 });
