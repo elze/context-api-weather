@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import { ForecastProvider } from './forecastContext'
 
 
 import CardGroup from 'react-bootstrap/CardGroup'
@@ -29,8 +30,11 @@ function reducer(state, action) {
 }
 
 function getButtonVariant(state, tempUnit) {
-	if (state.temperatureUnit === tempUnit) 
+	if (state.temperatureUnit === tempUnit) {
+		if (tempUnit === 'F')
+			return 'warning'
 		return 'info';
+	}
 	return 'light';
 }
 
@@ -97,9 +101,12 @@ function App() {
         {
           state.forecasts.map((forecast, ind) => { 
             return (		
+			 <ForecastProvider value={forecast}>
+			 <Card.Header>{ forecast.date }</Card.Header>
 		<CardGroup className="weather-alert">
-		<TwentyFourHourWeather forecast={forecast} currTemperatureUnit={state.temperatureUnit} />
+		<TwentyFourHourWeather currTemperatureUnit={state.temperatureUnit} />
 		</CardGroup>		 
+			</ForecastProvider>
 		 )
 		 })
 		}
