@@ -29,8 +29,11 @@ function reducer(state, action) {
 }
 
 function getButtonVariant(state, tempUnit) {
-	if (state.temperatureUnit === tempUnit) 
+	if (state.temperatureUnit === tempUnit) {
+		if (tempUnit === 'F')
+			return 'warning'
 		return 'info';
+	}
 	return 'light';
 }
 
@@ -97,9 +100,12 @@ function App() {
         {
           state.forecasts.map((forecast, ind) => { 
             return (		
+			<>
+		<Card.Header>{ forecast.date }</Card.Header>	
 		<CardGroup className="weather-alert">
 		<TwentyFourHourWeather forecast={forecast} currTemperatureUnit={state.temperatureUnit} />
-		</CardGroup>		 
+		</CardGroup>
+			</>
 		 )
 		 })
 		}
