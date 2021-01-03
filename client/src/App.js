@@ -101,12 +101,12 @@ function App() {
         {
           state.forecasts.map((forecast, ind) => { 
             return (		
-			 <ForecastProvider value={forecast}>
-			 <Card.Header>{ forecast.date }</Card.Header>
-		<CardGroup className="weather-alert">
-		<TwentyFourHourWeather currTemperatureUnit={state.temperatureUnit} />
-		</CardGroup>		 
-			</ForecastProvider>
+			 <ForecastProvider value={{forecast: forecast, temperatureUnit: state.temperatureUnit}}>
+			  <Card.Header>{ forecast.date }</Card.Header>
+			  <CardGroup className="weather-alert">
+				<TwentyFourHourWeather />
+			  </CardGroup>		 
+			 </ForecastProvider>
 		 )
 		 })
 		}

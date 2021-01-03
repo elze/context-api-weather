@@ -11,10 +11,11 @@ function getBadgeVariant(tempUnit) {
 	return 'info';
 }
 
-export function WeatherElement({ //forecastElem, 
-		partOfDay, currTemperatureUnit }) {
-	const forecast = useContext(ForecastContext);
+export function WeatherElement({ partOfDay }) {
+	const forecastState = useContext(ForecastContext);
+	const forecast = forecastState.forecast;
 	const forecastElem = forecast[partOfDay];
+	const currTemperatureUnit = forecastState.temperatureUnit;
   return (
 		 <Card>
 		  <Card.Body>

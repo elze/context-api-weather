@@ -9,8 +9,8 @@ export function TwentyFourHourWeather({
 currTemperatureUnit }) {
   return (
     <>
-	<WeatherElement currTemperatureUnit={currTemperatureUnit} partOfDay={"day"}/>
-	<WeatherElement currTemperatureUnit={currTemperatureUnit} partOfDay={"night"}/>	
+	<WeatherElement partOfDay={"day"}/>
+	<WeatherElement partOfDay={"night"}/>	
 	</>
 	);
 }
