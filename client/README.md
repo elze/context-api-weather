@@ -1,5 +1,9 @@
 A React.js app that displays the weather, written for Women Who Code Austin React.js meetup to illustrate Context API.
 
+The context API-related code is in the UseContextApi branch. The main branch does not have it. This is so we could compare how to build the same functionality with Context and without Context.
+
+This app is deployed here on Vercel: https://context-api-weather.vercel.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
