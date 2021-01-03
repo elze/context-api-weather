@@ -8,6 +8,12 @@ function getBadgeVariant(tempUnit) {
 	return 'info';
 }
 
+function getTemperatureAdjective(timeOfDay) {
+	if (timeOfDay === 'Day') 
+		return '(high)';
+	return '(low)';
+}
+
 export function WeatherElement({ forecastElem, timeOfDay, currTemperatureUnit }) {
   return (
 		 <Card>
@@ -16,7 +22,9 @@ export function WeatherElement({ forecastElem, timeOfDay, currTemperatureUnit })
 			<ListGroup>
 			 <ListGroup.Item><b>Weather</b>: {forecastElem.weather}</ListGroup.Item>
 			 <ListGroup.Item><b>Rain chance</b>: {forecastElem.rainchance}</ListGroup.Item>
-			 <ListGroup.Item><b>Temperature</b>: <Badge variant={getBadgeVariant(currTemperatureUnit)}>{forecastElem.temp_extreme}</Badge></ListGroup.Item>
+			 <ListGroup.Item><b>Temperature {getTemperatureAdjective(timeOfDay)}</b>: 
+				<Badge variant={getBadgeVariant(currTemperatureUnit)}>{forecastElem.temp_extreme}</Badge>
+			 </ListGroup.Item>
 			</ListGroup>
 		  </Card.Body>
 		 </Card>
