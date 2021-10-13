@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
 import ListGroup from 'react-bootstrap/ListGroup'
 import ForecastContext from './forecastContext'
 
@@ -28,7 +29,7 @@ export function WeatherElement({ partOfDay }) {
 			<Card.Title>{partOfDay.toUpperCase()}</Card.Title>
 			<ListGroup>
 			 <ListGroup.Item><b>Weather</b>: {forecastElem.weather}</ListGroup.Item>
-			 <ListGroup.Item><b>Rain chance</b>: {forecastElem.rainchance}</ListGroup.Item>
+			 <ListGroup.Item><b>Rain chance</b>: {forecastElem.rainchance}&nbsp;</ListGroup.Item>
 			 <ListGroup.Item><b>Temperature {getTemperatureAdjective(partOfDay)}</b> : 
 			  <Badge variant={getBadgeVariant(currTemperatureUnit)}>{forecastElem.temp_extreme}</Badge>
 			 </ListGroup.Item>
