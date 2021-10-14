@@ -10,6 +10,34 @@ import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
 import { TwentyFourHourWeather } from './TwentyFourHourWeather'
 
+function averageLow(forecasts) {
+	if (forecasts.length > 0) {
+		const lows = forecasts.map(f => parseInt(f["night"].temp_extreme));
+		const sumReducer = (previousValue, currentValue) => previousValue + currentValue;
+		const sum = lows.reduce(sumReducer);
+		console.log(`lows.reduce(sumReducer) = ${sum}`);
+		const ret = sum / lows.length;
+		console.log(`ret = ${ret}`);
+		//return lows.reduce(sumReducer) / lows.length;
+		return ret;
+	}
+	return 0;
+}
+
+function averageHigh(forecasts) {
+	if (forecasts.length > 0) {
+		const lows = forecasts.map(f => parseInt(f["day"].temp_extreme));
+		const sumReducer = (previousValue, currentValue) => previousValue + currentValue;
+		const sum = lows.reduce(sumReducer);
+		console.log(`lows.reduce(sumReducer) = ${sum}`);
+		const ret = sum / lows.length;
+		console.log(`ret = ${ret}`);
+		//return lows.reduce(sumReducer) / lows.length;
+		return ret;
+	}
+	return 0;
+}
+
 function reducer(state, action) {
 	console.log(`reducer: action.type = ${action.type}`);
   switch (action.type) {
@@ -22,8 +50,13 @@ function reducer(state, action) {
 			let newState = {...state, forecasts: getForecastsInCurrentUnits(action.forecasts, state.temperatureUnit) };
 			return newState;
 		}
-		let newState = {...state, forecasts: action.forecasts};
-		return newState;
+		let newState1 = {...state, forecasts: action.forecasts};
+		return newState1;
+	  case 'removeDay': 
+		let newForecasts = [...state.forecasts];
+		newForecasts.splice(action.dayNumber, 1);
+		let newState2 = {...state, forecasts: newForecasts};
+		return newState2;		
     default:
       throw new Error();
   }
@@ -96,15 +129,17 @@ function App() {
 	  <Button onClick={() => dispatch({type: 'setTemperatureUnit', unit: 'F'})} variant={getButtonVariant(state, "F")}>F</Button>
 	  <Button onClick={() => dispatch({type: 'setTemperatureUnit', unit: 'C'})} variant={getButtonVariant(state, "C")}>C</Button>
 	  </div>
+	  <div className="weather-title">Average low: { averageLow(state.forecasts) } </div>
+	  <div className="weather-title">Average high: { averageHigh(state.forecasts) } </div>
 	 </Alert>	
 		<div className="weather-title">
         {
           state.forecasts.map((forecast, ind) => { 
             return (		
-			 <ForecastProvider value={{forecast: forecast, temperatureUnit: state.temperatureUnit}}>
+			 <ForecastProvider value={{forecast: forecast, temperatureUnit: state.temperatureUnit, removeDay: (dayNum) => dispatch({type: 'removeDay', dayNumber: dayNum})}}>
 			  <Card.Header>{ forecast.date }</Card.Header>
 			  <CardGroup className="weather-alert">
-				<TwentyFourHourWeather />
+				<TwentyFourHourWeather dayIndex={ind}/>
 			  </CardGroup>		 
 			 </ForecastProvider>
 		 )
