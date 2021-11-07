@@ -10,6 +10,8 @@ import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
 import { TwentyFourHourWeather } from './TwentyFourHourWeather'
 
+import { useMatomo } from '@datapunt/matomo-tracker-react'
+
 function averageLow(forecasts) {
 	if (forecasts.length > 0) {
 		const lows = forecasts.map(f => parseInt(f["night"].temp_extreme));
@@ -40,6 +42,7 @@ function averageHigh(forecasts) {
 
 function reducer(state, action) {
 	console.log(`reducer: action.type = ${action.type}`);
+
   switch (action.type) {
 	  case 'setTemperatureUnit': 
 		if (action.unit !== state.temperatureUnit)
@@ -101,15 +104,23 @@ function getForecastsInCurrentUnits(forecasts, tempUnit) {
 function App() {
 	const initialState = {forecasts: [], temperatureUnit: "F"};
 	const [state, dispatch] = React.useReducer(reducer, initialState);
+	const { trackPageView, trackEvent } = useMatomo();
   
 	React.useEffect(() => {    
 		async function getForecasts() {
 			const response = await fetch('/api/forecasts');
 			const forecasts = await response.json();
 			if (response.status !== 200) {
+				trackEvent({ category: `/api/forecasts retrieval error`, action: forecasts.message });				
 				throw Error(forecasts.message);
 			}
 			console.log(`getForecasts()`);
+			trackPageView({
+			  documentTitle: `Weather components with Context API: forecasts loaded `, // optional
+			  //href: `http://localhost:3000`, // optional
+			  href: `https://context-api-weather-elze.vercel.app/`,
+			});	 				
+			
 			dispatch({type: 'setForecasts', forecasts: forecasts})
 		}
 		console.log(`useEffect is running`);
