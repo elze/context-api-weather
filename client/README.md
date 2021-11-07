@@ -2,7 +2,9 @@ A React.js app that displays the weather, written for Women Who Code Austin Reac
 
 The context API-related code is in the UseContextApi branch. The main branch does not have it. This is so we could compare how to build the same functionality with Context and without Context.
 
-This app is deployed here on Vercel: https://context-api-weather.vercel.app/
+Later I created a branch UpdateContext, which shows we can also use context to pass functions to the child components that they can call. This way a child component can dispatch an action to update the global state without knowing anything about the state.
+
+The UpdateContext branch of this app is deployed here on Vercel: https://context-api-weather.vercel.app/
 
 
 
